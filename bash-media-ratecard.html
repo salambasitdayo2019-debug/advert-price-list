@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BM Bash Media — Advert Rate Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Caveat:wght@500;700&family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0b;
+    --charcoal:#18181a;
+    --charcoal-2:#221f20;
+    --hairline:#2c2c2e;
+    --red:#e5231c;
+    --red-deep:#8f1410;
+    --white:#f7f6f3;
+    --gray:#9a9a9e;
+    --gray-dim:#6b6b6f;
+    --wa:#25D366;
+    --fb:#1877F2;
+    --ig1:#f58529; --ig2:#dd2a7b; --ig3:#8134af;
+    --tt1:#25F4EE; --tt2:#FE2C55;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{display:block;max-width:100%;}
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:.72rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--red);
+    font-weight:700;
+  }
+  h1,h2,h3{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.01em;text-transform:uppercase;}
+  .script{font-family:'Caveat',cursive;}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:50;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 6vw;
+    background:rgba(10,10,11,.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--hairline);
+  }
+  .nav-brand{display:flex;align-items:center;gap:10px;}
+  .nav-brand img{height:38px;width:auto;}
+  .nav-brand span{font-family:'Anton',sans-serif;font-size:1rem;letter-spacing:.03em;}
+  .nav-brand span em{font-style:normal;color:var(--red);}
+  .nav-links{display:flex;gap:28px;}
+  .nav-links a{
+    color:var(--gray);text-decoration:none;font-size:.85rem;font-weight:600;
+    letter-spacing:.02em;transition:color .2s;
+  }
+  .nav-links a:hover{color:var(--white);}
+  .nav-cta{
+    background:var(--red);color:var(--white);text-decoration:none;
+    padding:10px 18px;border-radius:100px;font-size:.82rem;font-weight:700;
+    letter-spacing:.02em;transition:transform .2s, box-shadow .2s;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(229,35,28,.4);}
+  @media(max-width:760px){ .nav-links{display:none;} }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:80px 6vw 60px;
+    text-align:center;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(229,35,28,.18), transparent 70%),
+      var(--black);
+    border-bottom:1px solid var(--hairline);
+  }
+  .hero-logo{width:150px;margin:0 auto 18px;}
+  .hero h1{
+    font-size:clamp(2.4rem,6vw,4.6rem);
+    line-height:.98;
+  }
+  .hero h1 .accent{color:var(--red);}
+  .hero .script{
+    display:block;
+    font-size:clamp(1.3rem,2.6vw,1.8rem);
+    color:var(--gray);
+    margin-top:6px;
+  }
+  .hero p.lede{
+    max-width:560px;margin:22px auto 0;
+    color:var(--gray);font-size:1rem;line-height:1.6;
+  }
+  .hero-ctas{display:flex;gap:14px;justify-content:center;margin-top:34px;flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--red);color:var(--white);text-decoration:none;
+    padding:15px 30px;border-radius:100px;font-weight:700;font-size:.95rem;
+    display:inline-flex;align-items:center;gap:10px;
+    box-shadow:0 10px 30px rgba(229,35,28,.35);
+    transition:transform .2s;
+  }
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--hairline);color:var(--white);text-decoration:none;
+    padding:15px 30px;border-radius:100px;font-weight:700;font-size:.95rem;
+    transition:border-color .2s, background .2s;
+  }
+  .btn-ghost:hover{border-color:var(--red);background:rgba(229,35,28,.08);}
+
+  /* stat strip */
+  .stats{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    max-width:760px;margin:52px auto 0;
+    border:1px solid var(--hairline);border-radius:18px;overflow:hidden;
+  }
+  .stat{padding:24px 12px;text-align:center;border-right:1px solid var(--hairline);}
+  .stat:last-child{border-right:none;}
+  .stat b{
+    display:block;font-family:'Space Mono',monospace;font-size:1.7rem;font-weight:700;color:var(--red);
+  }
+  .stat span{font-size:.72rem;color:var(--gray);letter-spacing:.03em;}
+  @media(max-width:600px){ .stats{grid-template-columns:1fr;} .stat{border-right:none;border-bottom:1px solid var(--hairline);} .stat:last-child{border-bottom:none;} }
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{padding:90px 6vw;border-bottom:1px solid var(--hairline);}
+  .block-head{max-width:640px;margin:0 auto 46px;text-align:center;}
+  .block-head h2{font-size:clamp(1.9rem,4vw,2.8rem);margin-top:8px;}
+  .block-head p{color:var(--gray);margin-top:12px;font-size:.98rem;line-height:1.6;}
+
+  /* ---------- PROOF ---------- */
+  .proof-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:26px;
+    max-width:960px;margin:0 auto;
+  }
+  .proof-card{
+    background:var(--charcoal);border:1px solid var(--hairline);border-radius:20px;
+    padding:22px;display:flex;flex-direction:column;gap:16px;
+  }
+  .proof-card .tag{
+    font-family:'Space Mono',monospace;font-size:.72rem;color:var(--gray);
+    display:flex;align-items:center;gap:8px;
+  }
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--wa);box-shadow:0 0 10px var(--wa);}
+  .proof-shot{border-radius:12px;overflow:hidden;border:1px solid var(--hairline);}
+  .proof-placeholder{
+    border:1.5px dashed var(--gray-dim);border-radius:12px;
+    min-height:220px;display:flex;align-items:center;justify-content:center;
+    flex-direction:column;gap:8px;color:var(--gray-dim);text-align:center;padding:20px;
+  }
+  .proof-placeholder b{color:var(--gray);font-size:.9rem;}
+  .proof-placeholder span{font-size:.78rem;}
+  @media(max-width:700px){ .proof-grid{grid-template-columns:1fr;} }
+
+  /* ---------- PLATFORM TABS ---------- */
+  .platform-tabs{
+    display:flex;justify-content:center;gap:10px;margin-bottom:56px;flex-wrap:wrap;
+  }
+  .ptab{
+    background:transparent;border:1px solid var(--hairline);color:var(--gray);
+    font-family:'Manrope',sans-serif;font-weight:700;font-size:.85rem;
+    padding:12px 22px;border-radius:100px;cursor:pointer;
+    display:flex;align-items:center;gap:8px;transition:all .2s;
+  }
+  .ptab:hover{border-color:var(--gray-dim);color:var(--white);}
+  .ptab.active{background:var(--white);color:var(--black);border-color:var(--white);}
+  .ptab .pdot{width:9px;height:9px;border-radius:50%;}
+
+  .panel{display:none;}
+  .panel.active{display:block;animation:fade .4s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+  /* category sub-nav (whatsapp only) */
+  .cat-row{
+    display:flex;gap:10px;justify-content:center;margin-bottom:40px;flex-wrap:wrap;
+  }
+  .cat-chip{
+    font-family:'Space Mono',monospace;font-size:.74rem;color:var(--gray);
+    border:1px solid var(--hairline);padding:9px 16px;border-radius:8px;cursor:pointer;
+    transition:all .2s;
+  }
+  .cat-chip:hover{color:var(--white);}
+  .cat-chip.active{background:var(--red);color:var(--white);border-color:var(--red);}
+  .cat-panel{display:none;}
+  .cat-panel.active{display:block;animation:fade .35s ease;}
+  .cat-note{
+    text-align:center;color:var(--gray);font-size:.85rem;margin:-10px auto 40px;max-width:480px;
+  }
+
+  /* ---------- PRICE GRID / RING CARDS ---------- */
+  .price-grid{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:18px;max-width:980px;margin:0 auto;
+  }
+  .price-grid.cols-3{grid-template-columns:repeat(3,1fr);max-width:760px;}
+  @media(max-width:900px){ .price-grid, .price-grid.cols-3{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:520px){ .price-grid, .price-grid.cols-3{grid-template-columns:1fr;} }
+
+  .tier{
+    background:var(--charcoal);border:1px solid var(--hairline);border-radius:20px;
+    padding:30px 20px;text-align:center;position:relative;
+    transition:transform .25s, border-color .25s, background .25s;
+  }
+  .tier:hover{transform:translateY(-6px);border-color:var(--red);background:var(--charcoal-2);}
+  .tier.best::before{
+    content:"MOST BOOKED";
+    position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+    background:var(--red);color:var(--white);font-family:'Space Mono',monospace;
+    font-size:.6rem;letter-spacing:.1em;padding:5px 10px;border-radius:100px;
+  }
+  .ring-wrap{width:92px;height:92px;margin:0 auto 18px;position:relative;}
+  .ring{width:100%;height:100%;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .ring-inner{
+    width:74px;height:74px;border-radius:50%;background:var(--charcoal);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .tier:hover .ring-inner{background:var(--charcoal-2);}
+  .ring-inner b{font-family:'Space Mono',monospace;font-size:1.5rem;line-height:1;}
+  .ring-inner span{font-size:.58rem;color:var(--gray);letter-spacing:.04em;text-transform:uppercase;margin-top:2px;}
+  .tier .price{
+    font-family:'Space Mono',monospace;font-weight:700;font-size:1.45rem;color:var(--white);
+  }
+  .tier .price::before{content:"₦";color:var(--red);margin-right:2px;}
+  .tier .per{font-size:.72rem;color:var(--gray-dim);margin-top:4px;}
+
+  .discuss{
+    text-align:center;max-width:480px;margin:40px auto 0;color:var(--gray);
+    font-size:.9rem;border-top:1px solid var(--hairline);padding-top:24px;
+  }
+  .discuss b{color:var(--white);}
+
+  .req-badge{
+    display:flex;align-items:center;gap:10px;justify-content:center;margin:0 auto 44px;
+    max-width:420px;background:rgba(37,211,102,.08);border:1px solid rgba(37,211,102,.35);
+    padding:12px 18px;border-radius:100px;
+  }
+  .req-badge span{font-size:.82rem;color:var(--white);font-weight:600;}
+  .req-badge b{color:var(--wa);}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:70px 6vw 40px;text-align:center;}
+  footer .hero-logo{width:100px;}
+  footer h3{font-size:1.6rem;margin-top:10px;}
+  footer p{color:var(--gray);margin-top:8px;font-size:.9rem;}
+  .foot-cta{margin-top:28px;}
+  .foot-meta{
+    margin-top:60px;padding-top:26px;border-top:1px solid var(--hairline);
+    color:var(--gray-dim);font-size:.76rem;font-family:'Space Mono',monospace;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+</style>
+</head>
+<body>
+
+  <header class="nav">
+    <div class="nav-brand">
+      <img src="assets/logo.png" alt="Bash Media logo">
+      <span>BASH <em>MEDIA</em></span>
+    </div>
+    <nav class="nav-links">
+      <a href="#proof">Reach</a>
+      <a href="#whatsapp">WhatsApp</a>
+      <a href="#social">Facebook &amp; IG</a>
+      <a href="#tiktok">TikTok</a>
+    </nav>
+    <a class="nav-cta" href="https://wa.me/2348056356447" target="_blank" rel="noopener">Book a Slot</a>
+  </header>
+
+  <section class="hero">
+    <img class="hero-logo" src="assets/logo.png" alt="Bash Media logo">
+    <h1>Advert <span class="accent">Rate Card</span></h1>
+    <span class="script">Home of All Round Entertainments&hellip;</span>
+    <p class="lede">
+      Put your business, brand or hustle in front of thousands of eyes every single day.
+      One rate card. Three platforms. Real, verifiable reach.
+    </p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="https://wa.me/2348056356447" target="_blank" rel="noopener">
+        Chat on WhatsApp →
+      </a>
+      <a class="btn-ghost" href="#whatsapp">See Prices</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>30,000+</b><span>WhatsApp Contacts</span></div>
+      <div class="stat"><b>3,600+</b><span>Avg. Status Views</span></div>
+      <div class="stat"><b>3</b><span>Platforms Covered</span></div>
+    </div>
+  </section>
+
+  <section class="block" id="proof">
+    <div class="block-head">
+      <span class="eyebrow">Proof, not promises</span>
+      <h2>See the reach for yourself</h2>
+      <p>Every advert placed on our WhatsApp status goes out to a real, active contact list — screenshots below are updated regularly.</p>
+    </div>
+    <div class="proof-grid">
+      <div class="proof-card">
+        <div class="tag"><span class="dot"></span> Status Views — Live Example</div>
+        <div class="proof-shot"><img src="assets/views.png" alt="Screenshot of Bash Media WhatsApp status views"></div>
+      </div>
+      <div class="proof-card">
+        <div class="tag"><span class="dot" style="background:var(--gray-dim);box-shadow:none"></span> 30,000+ Contact List</div>
+        <div class="proof-placeholder">
+          <b>📸 Contact list screenshot goes here</b>
+          <span>Drop your full WhatsApp contact count screenshot in this slot</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pricing">
+    <div class="block-head">
+      <span class="eyebrow">Rate Card 2026</span>
+      <h2>Pick your platform</h2>
+      <p>Every package runs as a paid status, feed post or story push — priced by the day.</p>
+    </div>
+
+    <div class="platform-tabs">
+      <button class="ptab active" data-panel="whatsapp"><span class="pdot" style="background:var(--wa)"></span> WhatsApp</button>
+      <button class="ptab" data-panel="social"><span class="pdot" style="background:var(--fb)"></span> Facebook &amp; Instagram</button>
+      <button class="ptab" data-panel="tiktok"><span class="pdot" style="background:var(--tt2)"></span> TikTok</button>
+    </div>
+
+    <!-- WHATSAPP PANEL -->
+    <div class="panel active" id="whatsapp">
+      <div class="req-badge"><b>✓ Requirement:</b> <span>Advertiser must have WhatsApp Business</span></div>
+
+      <div class="cat-row">
+        <button class="cat-chip active" data-cat="tv">TV Advert &amp; Add-Up</button>
+        <button class="cat-chip" data-cat="sales">Sales — Clothes, Shoes &amp; Materials</button>
+        <button class="cat-chip" data-cat="betting">Betting, Forex &amp; Crypto</button>
+      </div>
+
+      <div class="cat-panel active" data-cat="tv">
+        <div class="price-grid">
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 51deg, var(--hairline) 0)"><div class="ring-inner"><b>1</b><span>Day</span></div></div></div>
+            <div class="price">4,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 154deg, var(--hairline) 0)"><div class="ring-inner"><b>3</b><span>Days</span></div></div></div>
+            <div class="price">8,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier best">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 257deg, var(--hairline) 0)"><div class="ring-inner"><b>5</b><span>Days</span></div></div></div>
+            <div class="price">15,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 360deg, var(--hairline) 0)"><div class="ring-inner"><b>7</b><span>Days</span></div></div></div>
+            <div class="price">20,000</div><div class="per">flat rate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-panel" data-cat="sales">
+        <div class="price-grid">
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 51deg, var(--hairline) 0)"><div class="ring-inner"><b>1</b><span>Day</span></div></div></div>
+            <div class="price">3,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 154deg, var(--hairline) 0)"><div class="ring-inner"><b>3</b><span>Days</span></div></div></div>
+            <div class="price">6,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier best">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 257deg, var(--hairline) 0)"><div class="ring-inner"><b>5</b><span>Days</span></div></div></div>
+            <div class="price">12,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 360deg, var(--hairline) 0)"><div class="ring-inner"><b>7</b><span>Days</span></div></div></div>
+            <div class="price">15,000</div><div class="per">flat rate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cat-panel" data-cat="betting">
+        <div class="price-grid">
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 51deg, var(--hairline) 0)"><div class="ring-inner"><b>1</b><span>Day</span></div></div></div>
+            <div class="price">5,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 154deg, var(--hairline) 0)"><div class="ring-inner"><b>3</b><span>Days</span></div></div></div>
+            <div class="price">10,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier best">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 257deg, var(--hairline) 0)"><div class="ring-inner"><b>5</b><span>Days</span></div></div></div>
+            <div class="price">20,000</div><div class="per">flat rate</div>
+          </div>
+          <div class="tier">
+            <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--red) 360deg, var(--hairline) 0)"><div class="ring-inner"><b>7</b><span>Days</span></div></div></div>
+            <div class="price">25,000</div><div class="per">flat rate</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="discuss">Need a custom duration? <b>Other days can be discussed</b> — message us directly on WhatsApp.</div>
+    </div>
+
+    <!-- FACEBOOK / INSTAGRAM PANEL -->
+    <div class="panel" id="social">
+      <div class="price-grid cols-3">
+        <div class="tier">
+          <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--fb) 154deg, var(--hairline) 0)"><div class="ring-inner"><b>3</b><span>Days</span></div></div></div>
+          <div class="price">20,000</div><div class="per">flat rate</div>
+        </div>
+        <div class="tier best">
+          <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--fb) 257deg, var(--hairline) 0)"><div class="ring-inner"><b>5</b><span>Days</span></div></div></div>
+          <div class="price">35,000</div><div class="per">flat rate</div>
+        </div>
+        <div class="tier">
+          <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--fb) 360deg, var(--hairline) 0)"><div class="ring-inner"><b>7</b><span>Days</span></div></div></div>
+          <div class="price">50,000</div><div class="per">flat rate</div>
+        </div>
+      </div>
+      <div class="discuss">Runs as boosted feed posts &amp; story placements across <b>Facebook and Instagram</b>.</div>
+    </div>
+
+    <!-- TIKTOK PANEL -->
+    <div class="panel" id="tiktok">
+      <div class="price-grid cols-3">
+        <div class="tier">
+          <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--tt2) 154deg, var(--hairline) 0)"><div class="ring-inner"><b>3</b><span>Days</span></div></div></div>
+          <div class="price">20,000</div><div class="per">flat rate</div>
+        </div>
+        <div class="tier best">
+          <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--tt2) 257deg, var(--hairline) 0)"><div class="ring-inner"><b>5</b><span>Days</span></div></div></div>
+          <div class="price">35,000</div><div class="per">flat rate</div>
+        </div>
+        <div class="tier">
+          <div class="ring-wrap"><div class="ring" style="background:conic-gradient(var(--tt2) 360deg, var(--hairline) 0)"><div class="ring-inner"><b>7</b><span>Days</span></div></div></div>
+          <div class="price">50,000</div><div class="per">flat rate</div>
+        </div>
+      </div>
+      <div class="discuss">Runs as sponsored <b>TikTok</b> video placements to our audience.</div>
+    </div>
+  </section>
+
+  <footer>
+    <img class="hero-logo" src="assets/logo.png" alt="Bash Media logo">
+    <h3>Ready to get your brand seen?</h3>
+    <p>+234 805 635 6447 · WhatsApp Business</p>
+    <div class="foot-cta">
+      <a class="btn-primary" href="https://wa.me/2348056356447" target="_blank" rel="noopener">Book Your Advert Slot →</a>
+    </div>
+    <div class="foot-meta">
+      <span>© 2026 Bash Media</span>
+      <span>Rates subject to review without prior notice</span>
+    </div>
+  </footer>
+
+<script>
+  // Platform tab switching
+  const ptabs = document.querySelectorAll('.ptab');
+  const panels = document.querySelectorAll('.panel');
+  ptabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      ptabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.panel).classList.add('active');
+    });
+  });
+
+  // WhatsApp category switching
+  const chips = document.querySelectorAll('.cat-chip');
+  const catPanels = document.querySelectorAll('.cat-panel');
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      chips.forEach(c => c.classList.remove('active'));
+      catPanels.forEach(p => p.classList.remove('active'));
+      chip.classList.add('active');
+      document.querySelector(`.cat-panel[data-cat="${chip.dataset.cat}"]`).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
